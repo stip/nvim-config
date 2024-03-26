@@ -13,13 +13,13 @@ function M.config()
     enable_autosnippets = true,
   }
 
-  vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+  vim.keymap.set({ 'i', 's' }, '<C-j>', function()
     if luasnip.expand_or_jumpable() then
       luasnip.expand_or_jump()
     end
   end, { silent = true })
 
-  vim.keymap.set({ 'i', 's' }, '<C-j>', function()
+  vim.keymap.set({ 'i', 's' }, '<C-k>', function()
     if luasnip.jumpable(-1) then
       luasnip.jump(-1)
     end
@@ -31,8 +31,8 @@ function M.config()
     end
   end, { silent = true })
 
-  vim.keymap.set('n', '<leader><leader>s', '<cmd> source ~/AppData/Local/nvim/lua/custom/plugins/luasnip.lua')
-  require('luasnip.loaders.from_lua').load { paths = '~/.config/nvim/lua/custom/lua_snippets' }
+  vim.keymap.set('n', '<leader><leader>s', '<cmd> source ~/AppData/Local/nvim/lua/custom/plugins/luasnip.lua <CR>')
+  require('luasnip.loaders.from_lua').load { paths = 'C:\\Users\\stip\\AppData\\Local\\nvim\\lua\\custom\\lua_snippets' }
 end
 
 return M
