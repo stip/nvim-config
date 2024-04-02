@@ -138,6 +138,10 @@ return {
         clangd = {
           cmd = { 'clangd', '--offset-encoding=utf-16', '--enable-config' },
         },
+        texlab = {
+          cmd = { 'texlab' },
+          filetypes = { 'tex', 'plaintex', 'bib' }
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},

@@ -1,5 +1,5 @@
 local M = {
-  'L3MOND4D3/LuaSnip',
+  'L3MON4D3/LuaSnip',
   keys = {
     vim.keymap.set('n', '<leader>es', '<cmd>lua require("luasnip.loaders").edit_snippet_files()<CR>'),
   },
