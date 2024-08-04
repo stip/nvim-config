@@ -12,5 +12,7 @@ return {
         '-interactions=nonstopmode',
       },
     }
+    vim.g.vimtex_view_general_viewer = 'SumatraPDF.exe'
+    vim.g.vimtex_view_general_options = '-forward-search @tex @line @pdf -reuse-instance'
   end,
 }

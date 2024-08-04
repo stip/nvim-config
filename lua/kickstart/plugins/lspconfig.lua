@@ -1,3 +1,15 @@
+local function preview_location_callback(_, result)
+  if result == nil or vim.tbl_isempty(result) then
+    return nil
+  end
+  vim.lsp.util.preview_location(result[1], {})
+end
+
+function PeekDefinition()
+  local params = vim.lsp.util.make_position_params()
+  return vim.lsp.buf_request(0, 'textDocument/definition', params, preview_location_callback)
+end
+
 return {
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -90,9 +102,19 @@ return {
           -- or a suggestion from your LSP for this to activate.
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
+          map('<leader>na', vim.lsp.buf.rename, 're[na]me symbol')
+
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
+
+          map('<leader>pd', PeekDefinition, 'peek definition')
+
+          if vim.lsp.inlay_hint then
+            vim.keymap.set('n', '<leader>uh', function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            end, { desc = 'toggle inlay hints' })
+          end
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -115,6 +137,12 @@ return {
               callback = vim.lsp.buf.clear_references,
             })
           end
+          if client and client.server_capabilities.inlayHintProvider then
+            vim.g.inlay_hints_visible = true
+            vim.lsp.inlay_hint.enable(true)
+          else
+            print 'inlay hints not available'
+          end
         end,
       })
 
@@ -136,12 +164,16 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
-          cmd = { 'clangd', '--offset-encoding=utf-16', '--enable-config' },
+          cmd = { 'clangd', '--header-insertion=iwyu', '--offset-encoding=utf-16', '--enable-config' },
         },
         texlab = {
           cmd = { 'texlab' },
-          filetypes = { 'tex', 'plaintex', 'bib' }
+          filetypes = { 'tex', 'plaintex', 'bib' },
         },
+        -- csharp_ls = {
+        --   cmd = { 'csharp-ls' },
+        --   filetypes = { 'cs' },
+        -- },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
