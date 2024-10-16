@@ -32,8 +32,41 @@ return {
       },
     }
 
+    dap.configurations.lua = {
+      {
+        type = 'nlua',
+        request = 'attach',
+        name = 'Attach to running Neovim instance',
+        --     host = function()
+        --       local value = vim.fn.input('Host [127.0.0.1]: ')
+        --       if value ~= "" then
+        --         return value
+        --       end
+        --       return '127.0.0.1'
+        --     end,
+        --     port = function()
+        --       local val = tonumber(vim.fn.input('Port: '))
+        --       assert(val, "Please provide a port number")
+        --       return val
+        --     end,
+      },
+    }
+    --
+    dap.adapters.nlua = function(callback, config)
+      callback { type = 'server', host = '127.0.0.1', port = 8086 }
+    end
+
     dap.configurations.c = dap.configurations.cpp
     dapui.setup()
+
+    local opts = { noremap = true, silent = true }
+    local keymap = vim.api.nvim_set_keymap
+    keymap('n', '<F8>', [[:lua require"dap".toggle_breakpoint()<CR>]], { noremap = true })
+    keymap('n', '<F9>', [[:lua require"dap".continue()<CR>]], { noremap = true })
+    keymap('n', '<F10>', [[:lua require"dap".step_over()<CR>]], { noremap = true })
+    keymap('n', '<F11>', [[:lua require"dap".step_into()<CR>]], { noremap = true })
+    keymap('n', '<F12>', [[:lua require"dap.ui.widgets".hover()<CR>]], { noremap = true })
+    keymap('n', '<F5>', [[:lua require"osv".launch({port = 8086})<CR>]], { noremap = true })
   end,
 }
 
@@ -106,28 +139,6 @@ return {
 --   callback({ type = 'server'; host = server.host; port = server.port; })
 -- end
 --
--- dap.configurations.lua = {
---     type = 'nlua',
---     request = 'attach',
---     name = "Attach to running Neovim instance",
---     host = function()
---       local value = vim.fn.input('Host [127.0.0.1]: ')
---       if value ~= "" then
---         return value
---       end
---       return '127.0.0.1'
---     end,
---     port = function()
---       local val = tonumber(vim.fn.input('Port: '))
---       assert(val, "Please provide a port number")
---       return val
---     end,
--- }
---
--- dap.adapters.nlua = function(callback, config)
---   callback({ type = 'server', host = config.host, port = config.port })
--- end
---
 -- require("nvim-dap-virtual-text").setup()
 --
 -- local whichkey = require("which-key")
@@ -142,8 +153,3 @@ return {
 --   },
 -- })
 --
--- local opts = { noremap = true, silent = true }
--- local keymap = vim.api.nvim_set_keymap
--- keymap("n", "<F5>", ":lua require'dap'.continue()<CR>", opts)
--- keymap("n", "<F10>", ":lua require'dap'.step_over()<CR>", opts)
--- keymap("n", "<F11>", ":lua require'dap'.step_into()<CR>", opts)

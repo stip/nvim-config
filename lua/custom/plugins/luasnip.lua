@@ -1,5 +1,6 @@
 local M = {
   'L3MON4D3/LuaSnip',
+  lazy = false,
   keys = {
     vim.keymap.set('n', '<leader>es', '<cmd>lua require("luasnip.loaders").edit_snippet_files()<CR>'),
   },
@@ -32,7 +33,7 @@ function M.config()
   end, { silent = true })
 
   vim.keymap.set('n', '<leader><leader>s', '<cmd> source ~/AppData/Local/nvim/lua/custom/plugins/luasnip.lua <CR>')
-  require('luasnip.loaders.from_lua').load { paths = 'C:\\Users\\stip\\AppData\\Local\\nvim\\lua\\custom\\lua_snippets' }
+  require('luasnip.loaders.from_lua').load { paths = { '~/AppData/Local/nvim/lua/custom/lua_snippets' } }
 end
 
 return M
