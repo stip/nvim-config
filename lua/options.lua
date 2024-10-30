@@ -70,4 +70,8 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   end,
 })
 
+vim.g.have_nerd_font = true
+
+-- vim.g.sqlite_clib_path = '/c/Tools/sqlite3/sqlite3.dll'
+
 -- vim: ts=2 sts=2 sw=2 et
