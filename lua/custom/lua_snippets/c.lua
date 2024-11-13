@@ -35,7 +35,7 @@ luasnip.add_snippets('c', {
     name = 'Test setup and teardown implementation',
   }, {
     t {
-      'static void TestSetup(void)',
+      'static void SetTestUp(void)',
       '{',
       '    #include "InitMocks.h"',
       '',
@@ -49,7 +49,7 @@ luasnip.add_snippets('c', {
     t { '    ' },
     rep(1),
     t { '_Init(E_InitLevel_Three);', '' },
-    t { '}', '', 'static void TestTeardown(void)', '{', '    #include "VerifyDestroyMocks.h"', '}', '' },
+    t { '}', '', 'static void TearDownTest(void)', '{', '    #include "VerifyDestroyMocks.h"', '}', '' },
   }),
   s({
     trig = 'test_setup_teardown_decl',
@@ -57,10 +57,10 @@ luasnip.add_snippets('c', {
   }, {
     t {
       '/* setup for all tests (except init tests): init mocks and execute all init levels. */',
-      'static void TestSetup(void);',
+      'static void SetTestUp(void);',
       '',
       '/* teardown for all tests (except init tests): verify and destroy mocks. */',
-      'static void TestTeardown(void);',
+      'static void TearDownTest(void);',
       '',
     },
   }),
@@ -79,13 +79,13 @@ luasnip.add_snippets('c', {
     rep(1),
     t { ')', '' },
     t { '{', '' },
-    t { '', '    TestSetup();', '' },
+    t { '', '    SetTestUp();', '' },
     t { '}', '' },
     t { '', 'TEST_TEAR_DOWN(' },
     rep(1),
     t { ')', '' },
     t { '{', '' },
-    t { '    TestTeardown();', '' },
+    t { '    TearDownTest();', '' },
     t { '}', '' },
     t { '', 'TEST(' },
     rep(1),
