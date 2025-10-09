@@ -12,6 +12,10 @@ A starting point for Neovim that is:
 
 **NOT** a Neovim distribution, but instead a starting point for your configuration.
 
+## Contributing
+
+If you'd like to contribute to this project, please read our [Contributing Guidelines](CONTRIBUTING.md) for information on commit message best practices and contribution workflow.
+
 ## Installation
 
 ### Install Neovim
